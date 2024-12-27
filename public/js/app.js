@@ -110,16 +110,16 @@ button.addEventListener("click", (event) => {
   updateThemeOnHtmlEl({ theme: newTheme });
 
   currentThemeSetting = newTheme;
-}); 
+});
 
 // =========================== Table Header Checkbox checked all js Start ================================
 $('#selectAll').on('change', function () {
-  $('.form-check .form-check-input').prop('checked', $(this).prop('checked')); 
-}); 
+  $('.form-check .form-check-input').prop('checked', $(this).prop('checked'));
+});
 
   // Remove Table Tr when click on remove btn start
   $('.remove-btn').on('click', function () {
-    $(this).closest('tr').remove(); 
+    $(this).closest('tr').remove();
 
     // Check if the table has no rows left
     if ($('.table tbody tr').length === 0) {
