@@ -1,39 +1,43 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('password.store') }}">
-        @csrf
+@extends('layouts.auth')
 
-        <!-- Password Reset Token -->
-        <input type="hidden" name="token" value="{{ $request->route('token') }}">
+@section('content')
+    <div class="max-w-464-px mx-auto w-100">
+        <form method="POST" action="{{ route('password.store') }}">
+            @csrf
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+            <!-- Password Reset Token -->
+            <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-            <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div class="icon-field mb-16">
+                <span class="icon top-50 translate-middle-y">
+                    <iconify-icon icon="mage:email"></iconify-icon>
+                </span>
+                <input id="email" name="email" value="{{ old('email') }}" type="email"
+                    class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Email" required
+                    autocomplete="username">
+            </div>
+            <div class="icon-field mb-16">
+                <span class="icon top-50 translate-middle-y">
+                    <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
+                </span>
+                <input id="password" name="password" type="password" class="form-control h-56-px bg-neutral-50 radius-12"
+                    required autocomplete="new-password" placeholder="Password">
+            </div>
+            <span
+                class="toggle-password ri-eye-line cursor-pointer position-absolute end-0 top-50 translate-middle-y me-16 text-secondary-light"
+                data-toggle="#password"></span>
+            <div class="icon-field mb-16">
+                <span class="icon top-50 translate-middle-y">
+                    <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
+                </span>
+                <input id="password_confirmation" name="password_confirmation" type="password"
+                    class="form-control h-56-px bg-neutral-50 radius-12" required autocomplete="new-password"
+                    placeholder="Confirmation Password">
+            </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Reset Password') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+            <button type="submit" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32">
+                Reset Password
+            </button>
+        </form>
+    </div>
+@endsection

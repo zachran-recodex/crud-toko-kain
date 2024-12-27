@@ -1,25 +1,30 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
-    </div>
+@extends('layouts.auth')
 
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('password.email') }}">
-        @csrf
-
-        <!-- Email Address -->
+@section('content')
+    <div class="max-w-464-px mx-auto w-100">
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <h4 class="mb-12">Forgot Password</h4>
+            <p class="mb-32 text-secondary-light text-lg">Enter the email address associated with your account and we will
+                send you a link to reset your password.</p>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <x-primary-button>
-                {{ __('Email Password Reset Link') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+        <form method="POST" action="{{ route('password.email') }}">
+            @csrf
+
+            <div class="icon-field">
+                <span class="icon top-50 translate-middle-y">
+                    <iconify-icon icon="mage:email"></iconify-icon>
+                </span>
+                <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus
+                    class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Enter Email">
+            </div>
+            <button type="submit" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32">
+                Continue
+            </button>
+
+            <div class="text-center">
+                <a href="{{ route('login') }}" class="text-primary-600 fw-bold mt-24">Back to Login</a>
+            </div>
+        </form>
+    </div>
+@endsection
