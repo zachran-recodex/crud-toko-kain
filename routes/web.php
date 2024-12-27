@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\SaleController;
 
 Route::middleware('guest')->group(function () {
     Route::get('/', [AuthenticatedSessionController::class, 'create'])
@@ -24,6 +25,8 @@ Route::middleware('auth')->group(function () {
     Route::post('products/{product}/update-stock', [ProductController::class, 'updateStock'])->name('products.update-stock');
 
     Route::resource('sales', SaleController::class)->only(['index', 'create', 'store']);
+
+    Route::resource('suppliers', SupplierController::class);
 });
 
 require __DIR__.'/auth.php';

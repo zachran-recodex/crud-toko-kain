@@ -27,14 +27,20 @@
             </li>
             <li class="sidebar-menu-group-title">CRUD</li>
             <li>
+                <a href="{{ route('suppliers.index') }}">
+                    <iconify-icon icon="material-symbols:partner-exchange" class="menu-icon"></iconify-icon>
+                    <span>Supplier</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('products.index') }}">
-                    <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
+                    <iconify-icon icon="gridicons:product" class="menu-icon"></iconify-icon>
                     <span>Produk</span>
                 </a>
             </li>
             <li>
                 <a href="{{ route('sales.index') }}">
-                    <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
+                    <iconify-icon icon="material-symbols:point-of-sale" class="menu-icon"></iconify-icon>
                     <span>Penjualan</span>
                 </a>
             </li>
