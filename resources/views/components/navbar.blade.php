@@ -4,9 +4,6 @@
         </div>
         <div class="col-auto">
             <div class="d-flex flex-wrap align-items-center gap-3">
-                <button type="button" data-theme-toggle
-                    class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button>
-
                 <div class="dropdown">
                     <button class="d-flex justify-content-center align-items-center rounded-circle" type="button"
                         data-bs-toggle="dropdown">
@@ -27,11 +24,10 @@
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3"
-                                        href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                    <button type="submit"
+                                        class="dropdown-item text-black px-0 py-8 hover-bg-transparent hover-text-danger d-flex align-items-center gap-3">
                                         <iconify-icon icon="lucide:power" class="icon text-xl"></iconify-icon> Log Out
-                                    </a>
+                                    </button>
                                 </form>
                             </li>
                         </ul>
