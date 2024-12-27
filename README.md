@@ -1,11 +1,12 @@
-# Projek Jokian Boss!
+# Projek Jokian Manajemen Stok Toko Kain nih Boss!
 
 ## Persyaratan Sistem
 
--   PHP ≥ 8.1
+-   PHP ≥ 8.2
 -   Composer
 -   Node.js & NPM
 -   MySQL
+-   PDO PHP Extension
 
 ## Cara Instalasi
 
@@ -50,15 +51,23 @@ php artisan migrate
 6. Gas server lokal kayak anak balap:
 
 ```bash
-php artisan serve
-npm run dev
+# Pake concurrently buat jalanin semua service
+composer run dev
 ```
 
 ## Fitur
 
--   Login dan Registrasi yang nggak bikin pusing
+-   Login dan Registrasi yang nggak bikin pusing (Laravel Breeze)
 -   CRUD buat ngatur data semudah ngatur playlist
--   Tampilan responsif, cocok buat HP sampe layar bioskop
+-   Queue worker buat background tasks
+-   Real-time logs pake Laravel Pail
+-   Testing pake PEST
+
+## Tools Development
+
+-   Laravel Pint buat formatting code
+-   Laravel Sail buat Docker environment
+-   Vite buat asset bundling
 
 ## Lisensi
 
