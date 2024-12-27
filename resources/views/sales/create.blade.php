@@ -34,7 +34,7 @@
                                 <input type="text" name="customer_name" id="customer_name" class="form-control">
                             </div>
                             <div class="col-6">
-                                <label for="quantity" class="form-label">Quantity</label>
+                                <label for="quantity" class="form-label">Jumlah</label>
                                 <input type="number" name="quantity" id="quantity" class="form-control" min="1"
                                     required>
                             </div>

@@ -18,7 +18,7 @@
 
                         <div class="row gy-3">
                             <div class="col-12">
-                                <label for="stock_quantity" class="form-label">Stok Sekarang</label>
+                                <label for="stock_quantity" class="form-label">Ubah Stok Menjadi:</label>
                                 <input type="number" name="stock_quantity" id="stock_quantity" class="form-control"
                                     value="{{ $product->stock_quantity }}" min="0" required>
                             </div>

@@ -3,6 +3,7 @@
 @php
     $title = 'Penjualan';
     $subTitle = 'Penjualan';
+    \Carbon\Carbon::setLocale('id');
 @endphp
 
 @section('content')
@@ -23,7 +24,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Produk</th>
                         <th scope="col">Nama Pelanggan</th>
-                        <th scope="col">Kuantitas</th>
+                        <th scope="col">Jumlah</th>
                         <th scope="col">Total Harga</th>
                         <th scope="col">Tanggal Pembelian</th>
                     </tr>
@@ -36,7 +37,7 @@
                             <td>{{ $sale->customer_name ?? 'N/A' }}</td>
                             <td>{{ $sale->quantity }}</td>
                             <td>{{ format_rupiah($sale->total_price) }}</td>
-                            <td>{{ $sale->created_at->format('d-m-Y') }}</td>
+                            <td>{{ $sale->created_at->translatedFormat('l, d F Y') }}</td>
                         </tr>
                     @endforeach
                 </tbody>

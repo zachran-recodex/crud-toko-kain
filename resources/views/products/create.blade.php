@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <label for="stock_quantity" class="form-label">Kuantitas Stok</label>
+                                <label for="stock_quantity" class="form-label">Jumlah Stok</label>
                                 <input type="number" name="stock_quantity" id="stock_quantity" class="form-control"
                                     value="{{ $product->stock_quantity ?? '' }}">
                             </div>
