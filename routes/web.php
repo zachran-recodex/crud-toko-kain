@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductController;
@@ -23,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('sales', SaleController::class)->only(['index', 'create', 'store']);
 
     Route::resource('suppliers', SupplierController::class);
+
+    Route::resource('customers', CustomerController::class);
 });
 
 require __DIR__.'/auth.php';

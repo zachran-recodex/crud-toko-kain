@@ -3,7 +3,7 @@
         <iconify-icon icon="radix-icons:cross-2"></iconify-icon>
     </button>
     <div>
-        <a href="" class="sidebar-logo">
+        <a href="{{ route('dashboard.index') }}" class="sidebar-logo">
             <span class="sidebar-title">TOKO KAIN</span>
         </a>
         <style>
@@ -30,6 +30,12 @@
                 <a href="{{ route('suppliers.index') }}">
                     <iconify-icon icon="material-symbols:partner-exchange" class="menu-icon"></iconify-icon>
                     <span>Supplier</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('customers.index') }}">
+                    <iconify-icon icon="ix:customer-filled" class="menu-icon"></iconify-icon>
+                    <span>Customer</span>
                 </a>
             </li>
             <li>
