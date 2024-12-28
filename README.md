@@ -1,4 +1,4 @@
-# Projek Jokian Manajemen Stok Toko Kain nih Boss!
+# Projek Jokian CRUD Manajemen Stok Toko Kain nih Boss!
 
 ## Persyaratan Sistem
 
@@ -55,7 +55,15 @@ php artisan migrate
 composer run dev
 ```
 
-### 7. Jangan lupa daftar akun dulu biar bisa login dan mulai eksplorasi fitur-fiturnya!
+### 7. Jangan lupa daftar akun dulu biar bisa login dan mulai eksplorasi fitur-fiturnya! Atau jalankan:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+Kemudian login dengan:
+-   Email: admin@mail.com
+-   Password: admin123
 
 ## Fitur
 
@@ -74,3 +82,6 @@ composer run dev
 ## Lisensi
 
 Framework Laravel ini open-source, jadi bebas lu oprek! Lisensinya [MIT](https://opensource.org/licenses/MIT). Jangan lupa kopi, biar ngoding makin semangat!
+
+## Pengembang
+Kode ini dibikin sambil ngopi sama tim dari [Recodex ID](https://recodex.id). Kalau butuh bantuan, tinggal colek aja!
