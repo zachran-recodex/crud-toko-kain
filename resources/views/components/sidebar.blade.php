@@ -4,7 +4,7 @@
     </button>
     <div>
         <a href="{{ route('dashboard.index') }}" class="sidebar-logo">
-            <span class="sidebar-title">TOKO KAIN</span>
+            <span class="sidebar-title">STOCKJM</span>
         </a>
         <style>
             .sidebar-title {
@@ -25,7 +25,6 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="sidebar-menu-group-title">CRUD</li>
             <li>
                 <a href="{{ route('suppliers.index') }}">
                     <iconify-icon icon="material-symbols:partner-exchange" class="menu-icon"></iconify-icon>
