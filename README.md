@@ -55,29 +55,11 @@ php artisan migrate
 composer run dev
 ```
 
-### 7. Jangan lupa daftar akun dulu biar bisa login dan mulai eksplorasi fitur-fiturnya! Atau jalankan:
-
-```bash
-php artisan migrate:fresh --seed
-```
-
-Kemudian login dengan:
--   Email: admin@mail.com
--   Password: admin123
-
 ## Fitur
 
 -   Login dan Registrasi yang nggak bikin pusing
 -   CRUD buat ngatur data semudah ngatur playlist
--   Queue worker buat background tasks
--   Real-time logs pake Laravel Pail
--   Testing pake PEST
 
-## Tools Development
-
--   Laravel Pint buat formatting code
--   Laravel Sail buat Docker environment
--   Vite buat asset bundling
 
 ## Lisensi
 
