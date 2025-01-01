@@ -22,108 +22,69 @@
                     <form action="{{ route('sales.update', $sale->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-
                         <div class="row gy-3">
-                            <!-- Input Nama Pelanggan -->
                             <div class="col-12">
-                                <label for="customer_name">Nama Pelanggan</label>
-                                <input type="text" name="customer_name" id="customer_name" class="form-control"
-                                       placeholder="Masukkan Nama Pelanggan" value="{{ $sale->customer_name }}" required>
+                                <label for="customer_name" class="form-label">Nama Pelanggan</label>
+                                <input type="text" name="customer_name" id="customer_name" class="form-control" value="{{ old('customer_name', $sale->customer_name) }}">
                             </div>
 
-                            <!-- Dropdown Produk -->
-                            <div class="col-12">
-                                <label for="product_id">Produk yang Dijual</label>
-                                <select id="product_id" class="form-control">
-                                    <option value="" disabled selected>Pilih Produk</option>
-                                    @foreach ($products as $product)
-                                        <option value="{{ $product->id }}" data-name="{{ $product->name }}"
+                            <div class="col-4">
+                                <label for="product_id" class="form-label">Produk</label>
+                                <select name="product_id" id="product_id" class="form-control">
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}"
+                                                data-price="{{ $product->price_per_yard }}"
                                                 data-stock="{{ $product->stock_quantity }}"
                                             {{ $sale->product_id == $product->id ? 'selected' : '' }}>
-                                            {{ $product->name }} (Stock: {{ $product->stock_quantity }})
+                                            {{ $product->name }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <!-- Daftar Produk Terpilih -->
-                            <div id="cart-container" class="col-12">
-                                <div class="list-group" id="selected-products">
-                                    <div class="list-group-item d-flex justify-content-between align-items-center" id="cart-item-{{ $sale->product_id }}">
-                                        <div>
-                                            <strong>{{ $sale->product->name }}</strong><br>
-                                            <small>Stok Tersedia: {{ $sale->product->stock_quantity }}</small>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <input type="number"
-                                                   name="quantity"
-                                                   class="form-control me-2"
-                                                   placeholder="Jumlah"
-                                                   style="width: 150px;"
-                                                   min="1"
-                                                   max="{{ $sale->product->stock_quantity + $sale->quantity }}"
-                                                   value="{{ $sale->quantity }}"
-                                                   required
-                                                   data-stock="{{ $sale->product->stock_quantity + $sale->quantity }}">
-                                            <input type="hidden" name="product_id" value="{{ $sale->product_id }}">
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-4">
+                                <label for="product_price" class="form-label">Harga Produk</label>
+                                <input type="text" id="product_price" class="form-control" readonly>
                             </div>
 
-                            <!-- Submit -->
+                            <div class="col-4">
+                                <label for="product_stock" class="form-label">Stok Produk</label>
+                                <input type="text" id="product_stock" class="form-control" readonly>
+                            </div>
+
                             <div class="col-12">
-                                <button type="submit" class="btn btn-primary-600">Simpan Perubahan</button>
+                                <label for="quantity" class="form-label">Jumlah</label>
+                                <input type="number" name="quantity" id="quantity" class="form-control" value="{{ old('quantity', $sale->quantity) }}" required>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary-600">Perbarui</button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div><!-- card end -->
+            </div>
         </div>
     </div>
 
-    <!-- Script -->
     <script>
-        const productDropdown = document.getElementById('product_id');
-        const cartContainer = document.getElementById('selected-products');
+        document.getElementById('product_id').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var productPrice = selectedOption.getAttribute('data-price');
+            var productStock = selectedOption.getAttribute('data-stock');
 
-        productDropdown.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById('product_price').value = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(productPrice);
 
-            const productId = selectedOption.value;
-            const productName = selectedOption.getAttribute('data-name');
-            const stockQuantity = selectedOption.getAttribute('data-stock');
+            document.getElementById('product_stock').value = productStock;
+        });
 
-            if (document.getElementById(`cart-item-${productId}`)) {
-                alert('Produk ini sudah dipilih.');
-                return;
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedOption = document.getElementById('product_id').options[document.getElementById('product_id').selectedIndex];
+            var productPrice = selectedOption.getAttribute('data-price');
+            var productStock = selectedOption.getAttribute('data-stock');
 
-            const div = document.createElement('div');
-            div.id = `cart-item-${productId}`;
-            div.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-
-            div.innerHTML = `
-                <div>
-                    <strong>${productName}</strong><br>
-                    <small>Stok Tersedia: ${stockQuantity}</small>
-                </div>
-                <div class="d-flex align-items-center">
-                    <input type="number"
-                           name="quantity"
-                           class="form-control me-2"
-                           placeholder="Jumlah"
-                           style="width: 150px;"
-                           min="1"
-                           max="${stockQuantity}"
-                           required
-                           data-stock="${stockQuantity}">
-                    <input type="hidden" name="product_id" value="${productId}">
-                </div>
-            `;
-
-            cartContainer.innerHTML = '';
-            cartContainer.appendChild(div);
+            document.getElementById('product_price').value = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(productPrice);
+            document.getElementById('product_stock').value = productStock;
         });
     </script>
 @endsection

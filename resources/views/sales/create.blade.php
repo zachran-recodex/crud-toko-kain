@@ -21,116 +21,65 @@
                 <div class="card-body">
                     <form action="{{ route('sales.store') }}" method="POST">
                         @csrf
-
                         <div class="row gy-3">
-                            <!-- Input Nama Pelanggan -->
                             <div class="col-12">
-                                <label for="customer_name">Nama Pelanggan</label>
-                                <input type="text" name="customer_name" id="customer_name" class="form-control"
-                                    placeholder="Masukkan Nama Pelanggan" required>
+                                <label for="customer_name" class="form-label">Nama Pelanggan</label>
+                                <input type="text" name="customer_name" id="customer_name" class="form-control">
                             </div>
 
-                            <!-- Dropdown Produk -->
-                            <div class="col-12">
-                                <label for="product_id">Produk yang Dijual</label>
-                                <select id="product_id" class="form-control">
-                                    <option value="" disabled selected>Pilih Produk</option>
-                                    @foreach ($products as $product)
-                                        <option value="{{ $product->id }}" data-name="{{ $product->name }}"
-                                            data-stock="{{ $product->stock_quantity }}">
-                                            {{ $product->name }} (Stock: {{ $product->stock_quantity }})
-                                        </option>
+                            <div class="col-4">
+                                <label for="product_id" class="form-label">Produk</label>
+                                <select name="product_id" id="product_id" class="form-control">
+                                    @foreach($products as $product)
+                                        <option value="{{ $product->id }}" data-price="{{ $product->price_per_yard }}" data-stock="{{ $product->stock_quantity }}">{{ $product->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
-                            <!-- Daftar Produk Terpilih -->
-                            <div id="cart-container" class="col-12">
-                                <div class="list-group" id="selected-products">
-                                    <div class="list-group-item text-center text-muted">
-                                        Belum ada produk yang dipilih.
-                                    </div>
-                                </div>
+                            <div class="col-4">
+                                <label for="product_price" class="form-label">Harga Produk</label>
+                                <input type="text" id="product_price" class="form-control" readonly>
                             </div>
 
-                            <!-- Submit -->
+                            <div class="col-4">
+                                <label for="product_stock" class="form-label">Stok Produk</label>
+                                <input type="text" id="product_stock" class="form-control" readonly>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="quantity" class="form-label">Jumlah</label>
+                                <input type="number" name="quantity" id="quantity" class="form-control" required>
+                            </div>
+
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary-600">Tambah</button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div><!-- card end -->
+            </div>
         </div>
     </div>
 
-    <!-- Script -->
+
     <script>
-        const productDropdown = document.getElementById('product_id');
-        const cartContainer = document.getElementById('selected-products');
+        document.getElementById('product_id').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+            var productPrice = selectedOption.getAttribute('data-price');
+            var productStock = selectedOption.getAttribute('data-stock');
 
-        productDropdown.addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
+            document.getElementById('product_price').value = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(productPrice);
 
-            const productId = selectedOption.value;
-            const productName = selectedOption.getAttribute('data-name');
-            const stockQuantity = selectedOption.getAttribute('data-stock');
+            document.getElementById('product_stock').value = productStock;
+        });
 
-            if (document.getElementById(`cart-item-${productId}`)) {
-                alert('Produk ini sudah ditambahkan.');
-                return;
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectedOption = document.getElementById('product_id').options[document.getElementById('product_id').selectedIndex];
+            var productPrice = selectedOption.getAttribute('data-price');
+            var productStock = selectedOption.getAttribute('data-stock');
 
-            const emptyMessage = cartContainer.querySelector('.list-group-item.text-muted');
-            if (emptyMessage) emptyMessage.remove();
-
-            const div = document.createElement('div');
-            div.id = `cart-item-${productId}`;
-            div.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-
-            div.innerHTML = `
-                <div>
-                    <strong>${productName}</strong><br>
-                    <small>Stok Tersedia: ${stockQuantity}</small>
-                </div>
-                <div class="d-flex align-items-center">
-                    <input type="number"
-                           name="quantities[${productId}]"
-                           class="form-control me-2"
-                           placeholder="Jumlah"
-                           style="width: 150px;"
-                           min="1"
-                           max="${stockQuantity}"
-                           required
-                           data-stock="${stockQuantity}">
-                    <input type="hidden" name="products[]" value="${productId}">
-                    <button type="button" class="btn btn-danger btn-sm remove-product" data-id="${productId}">
-                        Hapus
-                    </button>
-                </div>
-            `;
-
-            cartContainer.appendChild(div);
-
-            div.querySelector('.remove-product').addEventListener('click', function() {
-                div.remove();
-                if (cartContainer.children.length === 0) {
-                    const emptyDiv = document.createElement('div');
-                    emptyDiv.className = 'list-group-item text-center text-muted';
-                    emptyDiv.textContent = 'Belum ada produk yang dipilih.';
-                    cartContainer.appendChild(emptyDiv);
-                }
-            });
-
-            // Validasi input jumlah
-            div.querySelector('input[type="number"]').addEventListener('input', function() {
-                const quantity = parseInt(this.value);
-                const maxStock = parseInt(this.getAttribute('data-stock'));
-                if (quantity > maxStock) {
-                    alert('Jumlah yang dimasukkan melebihi stok yang tersedia.');
-                    this.value = maxStock;
-                }
-            });
+            document.getElementById('product_price').value = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(productPrice);
+            document.getElementById('product_stock').value = productStock;
         });
     </script>
 @endsection

@@ -10,7 +10,7 @@ class SaleController extends Controller
 {
     public function index()
     {
-        $sales = Sale::with('product')->latest()->get();
+        $sales = Sale::with('product')->latest()->paginate(10);
         return view('sales.index', compact('sales'));
     }
 
@@ -22,91 +22,78 @@ class SaleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
-            'products' => 'required|array',
-            'quantities' => 'required|array',
+        $validated = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'customer_name' => 'nullable|string|max:255',
+            'quantity' => 'required|integer|min:1',
         ]);
 
-        foreach ($request->products as $productId) {
-            $quantity = $request->quantities[$productId];
-            $product = Product::findOrFail($productId);
+        $product = Product::find($validated['product_id']);
 
-            if ($product->stock_quantity < $quantity) {
-                return back()->withErrors(['quantities' => 'Stok tidak mencukupi untuk produk ' . $product->name]);
-            }
-
-            $totalPrice = $product->price_per_meter * $quantity;
-
-            Sale::create([
-                'product_id' => $productId,
-                'customer_name' => $request->customer_name,
-                'quantity' => $quantity,
-                'total_price' => $totalPrice,
-            ]);
-
-            $product->decrement('stock_quantity', $quantity);
+        if ($product->stock_quantity < $validated['quantity']) {
+            return redirect()->back()->with('error', 'Stok tidak cukup untuk produk ini.');
         }
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil ditambahkan.');
+        $totalPrice = $product->price_per_yard * $validated['quantity'];
+
+        Sale::create([
+            'product_id' => $validated['product_id'],
+            'customer_name' => $validated['customer_name'],
+            'quantity' => $validated['quantity'],
+            'total_price' => $totalPrice,
+        ]);
+
+        $product->decrement('stock_quantity', $validated['quantity']);
+
+        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil disimpan');
     }
 
-    public function show($id)
+    public function edit(Sale $sale)
     {
-        $sale = Sale::with('product')->findOrFail($id);
-        return view('sales.show', compact('sale'));
-    }
-
-    public function edit($id)
-    {
-        $sale = Sale::findOrFail($id);
         $products = Product::all();
         return view('sales.edit', compact('sale', 'products'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Sale $sale)
     {
-        $sale = Sale::findOrFail($id);
-
-        $request->validate([
-            'customer_name' => 'required|string|max:255',
+        $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
+            'customer_name' => 'nullable|string|max:255',
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $product = Product::findOrFail($request->product_id);
+        $product = Product::find($validated['product_id']);
 
-        // Restore stock of the old product
-        $sale->product->increment('stock_quantity', $sale->quantity);
-
-        // Check stock for the updated product
-        if ($product->stock_quantity < $request->quantity) {
-            return back()->withErrors(['quantity' => 'Stok tidak mencukupi untuk produk ' . $product->name]);
+        if ($product->stock_quantity + $sale->quantity < $validated['quantity']) {
+            return redirect()->back()->with('error', 'Stok tidak cukup untuk produk ini.');
         }
 
-        $totalPrice = $product->price_per_meter * $request->quantity;
+        $totalPrice = $product->price_per_yard * $validated['quantity'];
+
+        if ($sale->quantity !== $validated['quantity']) {
+            $product->increment('stock_quantity', $sale->quantity);
+
+            $product->decrement('stock_quantity', $validated['quantity']);
+        }
 
         $sale->update([
-            'product_id' => $request->product_id,
-            'customer_name' => $request->customer_name,
-            'quantity' => $request->quantity,
+            'product_id' => $validated['product_id'],
+            'customer_name' => $validated['customer_name'],
+            'quantity' => $validated['quantity'],
             'total_price' => $totalPrice,
         ]);
 
-        $product->decrement('stock_quantity', $request->quantity);
-
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diperbarui.');
+        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy(Sale $sale)
     {
-        $sale = Sale::findOrFail($id);
+        $product = $sale->product;
 
-        // Restore stock
-        $sale->product->increment('stock_quantity', $sale->quantity);
+        $product->increment('stock_quantity', $sale->quantity);
 
         $sale->delete();
 
-        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil dihapus.');
+        return redirect()->route('sales.index')->with('success', 'Penjualan berhasil dihapus');
     }
 }
