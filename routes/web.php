@@ -1,18 +1,26 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/', function () {
+    return redirect('/login');
 });
 
-Route::middleware('auth')->group(function () {
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
 
     Route::resource('dashboard', DashboardController::class);
 
@@ -24,5 +32,3 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('customers', CustomerController::class);
 });
-
-require __DIR__.'/auth.php';

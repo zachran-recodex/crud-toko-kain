@@ -3,7 +3,7 @@
 @section('content')
     <div class="max-w-464-px mx-auto w-100">
         <div>
-            <span class="logo-title">TOKO KAIN</span>
+            <span class="logo-title">STOCKJM</span>
             <style>
                 .logo-title {
                     font-size: 24px;
@@ -15,7 +15,7 @@
                 }
             </style>
         </div>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login.post') }}">
             @csrf
 
             <div class="icon-field mb-16">
@@ -23,27 +23,14 @@
                     <iconify-icon icon="mage:email"></iconify-icon>
                 </span>
                 <input id="email" name="email" type="email" class="form-control h-56-px bg-neutral-50 radius-12"
-                    placeholder="Email" value="{{ old('email') }}" required autofocus autocomplete="username">
+                    placeholder="Email" value="{{ old('email') }}" required autofocus autocomplete="email">
             </div>
             <div class="icon-field mb-16">
                 <span class="icon top-50 translate-middle-y">
                     <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                 </span>
                 <input id="password" name="password" type="password" class="form-control h-56-px bg-neutral-50 radius-12"
-                    required autocomplete="current-password" placeholder="Password">
-            </div>
-            <div class="">
-                <div class="d-flex justify-content-between gap-2">
-                    <div class="form-check style-check d-flex align-items-center">
-                        <input class="form-check-input border border-neutral-300" type="checkbox" value=""
-                            id="remember_me" name="remember">
-                        <label class="form-check-label" for="remember_me">Remember me</label>
-                    </div>
-                    @if (Route::has('password.request'))
-                        <a href="{{ route('password.request') }}" class="text-primary-600 fw-medium">Forgot
-                            Password?</a>
-                    @endif
-                </div>
+                    required autocomplete="password" placeholder="Password">
             </div>
 
             <button type="submit" class="btn btn-primary text-sm btn-sm px-12 py-16 w-100 radius-12 mt-32">

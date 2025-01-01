@@ -2,7 +2,7 @@
 
 @php
     $title = 'Dashboard';
-    $subTitle = 'Toko Kain';
+    $subTitle = 'STOCKJM';
 @endphp
 
 @section('content')

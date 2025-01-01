@@ -32,21 +32,21 @@
                 </span>
                 <input id="email" name="email" value="{{ old('email') }}" type="email"
                     class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Email" required
-                    autocomplete="username">
+                    autocomplete="email">
             </div>
             <div class="icon-field mb-16">
                 <span class="icon top-50 translate-middle-y">
                     <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                 </span>
                 <input id="password" name="password" type="password" class="form-control h-56-px bg-neutral-50 radius-12"
-                    required autocomplete="new-password" placeholder="Password">
+                    required autocomplete="password" placeholder="Password">
             </div>
             <div class="icon-field mb-16">
                 <span class="icon top-50 translate-middle-y">
                     <iconify-icon icon="solar:lock-password-outline"></iconify-icon>
                 </span>
                 <input id="password_confirmation" name="password_confirmation" type="password"
-                    class="form-control h-56-px bg-neutral-50 radius-12" required autocomplete="new-password"
+                    class="form-control h-56-px bg-neutral-50 radius-12" required autocomplete="password-confirmation"
                     placeholder="Confirmation Password">
             </div>
 
