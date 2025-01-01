@@ -24,10 +24,15 @@
                         @method('PUT')
 
                         <div class="row gy-3">
-                            <div class="col-12">
+                            <div class="col-6">
                                 <label for="name" class="form-label">Nama</label>
                                 <input type="text" name="name" id="name" class="form-control"
                                        value="{{ old('name', $product->name) }}" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="stock_quantity" class="form-label">Jumlah Stok</label>
+                                <input type="number" name="stock_quantity" id="stock_quantity" class="form-control"
+                                       value="{{ old('stock_quantity', $product->stock_quantity) }}" required min="0">
                             </div>
                             <div class="col-6">
                                 <label for="price_per_yard" class="form-label">Harga per Yard</label>
@@ -47,6 +52,7 @@
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="col-12">
                                 <button type="submit" class="btn btn-primary-600">Simpan</button>
                             </div>

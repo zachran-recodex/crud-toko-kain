@@ -39,9 +39,10 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'price_per_yard' => 'required|numeric|min:0',
-            'type' => 'required|in:polos,motif',
+            'name' => 'sometimes|string|max:255',
+            'price_per_yard' => 'sometimes|numeric|min:0',
+            'stock_quantity' => 'sometimes|integer|min:0',
+            'type' => 'sometimes|in:polos,motif',
         ]);
 
         $product->update($request->all());
@@ -52,21 +53,5 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
-    }
-
-    public function editStock(Product $product)
-    {
-        return view('products.edit-stock', compact('product'));
-    }
-
-    public function updateStock(Request $request, Product $product)
-    {
-        $request->validate([
-            'stock_quantity' => 'required|integer|min:0',
-        ]);
-
-        $product->update(['stock_quantity' => $request->stock_quantity]);
-
-        return redirect()->route('products.index')->with('success', 'Stock updated successfully!');
     }
 }

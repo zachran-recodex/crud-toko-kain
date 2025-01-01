@@ -17,8 +17,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('dashboard', DashboardController::class);
 
     Route::resource('products', ProductController::class);
-    Route::get('products/{product}/edit-stock', [ProductController::class, 'editStock'])->name('products.edit-stock');
-    Route::post('products/{product}/update-stock', [ProductController::class, 'updateStock'])->name('products.update-stock');
 
     Route::resource('sales', SaleController::class);
 
