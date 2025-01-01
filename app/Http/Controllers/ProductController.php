@@ -22,8 +22,9 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'price_per_meter' => 'required|numeric|min:0',
+            'price_per_yard' => 'required|numeric|min:0',
             'stock_quantity' => 'required|integer|min:0',
+            'type' => 'required|in:polos,motif',
         ]);
 
         Product::create($request->all());
@@ -39,7 +40,8 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'price_per_meter' => 'required|numeric|min:0',
+            'price_per_yard' => 'required|numeric|min:0',
+            'type' => 'required|in:polos,motif',
         ]);
 
         $product->update($request->all());

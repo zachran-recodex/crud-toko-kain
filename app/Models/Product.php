@@ -9,7 +9,8 @@ class Product extends Model
     protected $fillable = [
         'name',
         'stock_quantity',
-        'price_per_meter',
+        'price_per_yard',
+        'type',
     ];
 
     public function sales()

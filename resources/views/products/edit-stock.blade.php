@@ -9,8 +9,14 @@
     <div class="row gy-4">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
-                    <h6 class="card-title mb-0">Ubah Stok untuk {{ $product->name }}</h6>
+                <div class="card-header d-flex align-items-center flex-wrap justify-content-between">
+                    <h5 class="card-title mb-0">Edit Stok | {{ $product->name }}</h5>
+
+                    <a href="{{ route('products.index') }}"
+                       class="btn btn-primary text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2">
+                        <iconify-icon icon="material-symbols:arrow-back-rounded" class="icon text-xl line-height-1"></iconify-icon>
+                        Kembali
+                    </a>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('products.update-stock', $product) }}" method="POST">
