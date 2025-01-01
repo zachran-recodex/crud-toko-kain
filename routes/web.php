@@ -9,8 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', [AuthenticatedSessionController::class, 'create'])
-        ->name('login');
+    Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('login');
 });
 
 Route::middleware('auth')->group(function () {
@@ -21,7 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('products/{product}/edit-stock', [ProductController::class, 'editStock'])->name('products.edit-stock');
     Route::post('products/{product}/update-stock', [ProductController::class, 'updateStock'])->name('products.update-stock');
 
-    Route::resource('sales', SaleController::class)->only(['index', 'create', 'store']);
+    Route::resource('sales', SaleController::class);
 
     Route::resource('suppliers', SupplierController::class);
 
