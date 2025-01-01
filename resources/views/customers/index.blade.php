@@ -35,6 +35,10 @@
                         <td>{{ $customer->phone }}</td>
                         <td>{{ $customer->address }}</td>
                         <td class="d-flex flex-wrap gap-2">
+                            <a href="{{ route('customers.show', $customer->id) }}"
+                               class="w-32-px h-32-px bg-warning-focus text-warning-main rounded-circle d-inline-flex align-items-center justify-content-center">
+                                <iconify-icon icon="icon-park-outline:eyes"></iconify-icon>
+                            </a>
                             <a href="{{ route('customers.edit', $customer->id) }}"
                                class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                 <iconify-icon icon="lucide:edit"></iconify-icon>
